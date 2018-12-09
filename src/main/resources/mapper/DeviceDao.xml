@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.DeviceDao">
+
+    <insert id="insertDevice" useGeneratedKeys="true" keyProperty="deviceId" keyColumn="device_id" parameterType="com.xhdc.devicesystem.entity.Device">
+        insert into device (device_number,device_storagetime,device_storehouse,device_status,device_type,device_price,device_lendername,device_borrowtime,device_describle)
+        values(#{deviceNumber},#{deviceStoragetime},#{deviceStorehouse},#{deviceStatus},#{deviceType},#{devicePrice},#{deviceLendername},#{deviceBorrowtime},#{deviceDescrible})
+    </insert>
+
+    <delete id="deleteDevice">
+        delete from device where device_id=#{deviceId}
+    </delete>
+
+    <update id="updateDevice" parameterType="com.xhdc.devicesystem.entity.Device">
+        update device
+        <set>
+            <if test="deviceNumber!=null">device_number=#{deviceNumber},</if>
+            <if test="deviceStoragetime!=null">device_storagetime=#{deviceStoragetime},</if>
+            <if test="deviceStorehouse!=null">device_storehouse=#{deviceStorehouse},</if>
+            <if test="deviceStatus!=null">device_status=#{deviceStatus},</if>
+            <if test="deviceType!=null">device_type=#{deviceType},</if>
+            <if test="devicePrice!=null">device_price=#{devicePrice},</if>
+            <if test="deviceLendername!=null">device_lendername=#{deviceLendername},</if>
+            <if test="deviceBorrowtime!=null||deviceBorrowtime==null">device_borrowtime=#{deviceBorrowtime},</if>
+            <if test="deviceDescrible!=null">device_describle=#{deviceDescrible}</if>
+    </set>
+        where
+        device_id=#{deviceId}
+    </update>
+
+    <select id="queryDevice" resultType="com.xhdc.devicesystem.entity.Device">
+        select device_id,device_number,device_storagetime,device_storehouse,device_status,device_type,device_price,device_lendername,
+        device_borrowtime,device_describle from device
+    </select>
+
+    <select id="queryDeviceByDeviceType"  resultType="com.xhdc.devicesystem.entity.Device">
+        select device_id,device_number,device_storagetime,device_storehouse,device_status,device_type,device_price,device_lendername,
+        device_borrowtime,device_describle from device
+        where
+        device_type=#{deviceType}
+    </select>
+
+</mapper>

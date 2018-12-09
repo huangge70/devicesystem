@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhdc.devicesystem.dao.UserDao">
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id" parameterType="com.xhdc.devicesystem.entity.User">
+        insert into user (loginname,role_id,realname,tel,password)
+        values(#{loginName},2,#{realName},#{tel},#{password})
+    </insert>
+
+    <update id="updateUser"  parameterType="com.xhdc.devicesystem.entity.User" >
+        update user
+        <set>
+            <if test="loginName != null" >loginname = #{loginName},</if>
+            <if test="password != null" >password = #{password},</if>
+            <if test="realName != null" >realname = #{realName},</if>
+            <if test="tel != null" >tel = #{tel},</if>
+            <if test="email != null" >email = #{email}</if>
+        </set>
+        where
+        user_id = #{userId}
+    </update>
+
+    <select id="queryUserById" resultType="com.xhdc.devicesystem.entity.User">
+        select user_id,loginname,realname,password,tel,email,role_id
+        from user
+        where binary user_id = #{userId}
+    </select>
+
+    <select id="login" resultType="com.xhdc.devicesystem.entity.User">
+        select user_id,loginname,password,realname,tel,email,role_id
+        from user
+        where binary loginname = #{loginname} and binary password = #{password}
+    </select>
+
+    <select id="queryLoginName" resultType="com.xhdc.devicesystem.entity.User">
+        select loginname
+        from user
+        where binary loginname = #{loginName}
+    </select>
+
+    <select id="queryTel" resultType="com.xhdc.devicesystem.entity.User">
+        select tel
+        from user
+        where binary tel = #{tel}
+    </select>
+
+</mapper>

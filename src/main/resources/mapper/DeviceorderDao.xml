@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.DeviceorderDao">
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="recordId" keyColumn="record_id" parameterType="com.xhdc.devicesystem.entity.Deviceorder">
+        insert into deviceorder (user_id,user_name,device_id,device_number,record_outtime,device_type)
+        values(#{userId},#{userName},#{deviceId},#{deviceNumber},#{recordOuttime},#{deviceType})
+    </insert>
+
+    <select id="queryRecordByUserId" resultType="com.xhdc.devicesystem.entity.Deviceorder">
+        select record_id,user_id,user_name,device_id,device_number,record_outtime,record_intime,device_type from deviceorder where user_id=#{userId} order by record_outtime desc
+    </select>
+
+    <select id="queryRecord" resultType="com.xhdc.devicesystem.entity.Deviceorder">
+        select record_id,user_id,user_name,device_id,device_number,record_outtime,record_intime,device_type from deviceorder order by record_outtime desc
+    </select>
+
+    <select id="getRecordById" resultType="com.xhdc.devicesystem.entity.Deviceorder">
+        select record_id,user_id,user_name,device_id,device_number,record_outtime,record_intime,device_type from deviceorder where user_id=#{recordId}
+    </select>
+
+
+    <update id="updateDeviceorder" >
+        update deviceorder
+        set record_intime=#{recordIntime}
+        where
+        record_id=#{recordId}
+    </update>
+</mapper>

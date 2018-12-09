@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.SwitchboardDao">
+
+    <insert id="insertSboard" useGeneratedKeys="true" keyProperty="switchboardId" keyColumn="switchboard_id" parameterType="com.xhdc.devicesystem.entity.Switchboard">
+        insert into switchboard (switchboard_storagetime,switchboard_status,switchboard_price,switchboard_lendername,switchboard_lendertel,switchboard_borrowtime,switchboard_brand,switchboard_portnumber,switchboard_interfacetype)
+        values(#{switchboardStoragetime},#{switchboardStatus},#{switchboardPrice},#{switchboardLendername},#{switchboardLendertel},#{switchboardBorrowtime},#{switchboardBrand},#{switchboardPortnumber},#{switchboardInterfacetype})
+    </insert>
+
+    <delete id="deleteSboard">
+        delete from switchboard where switchboard_id=#{switchboardId}
+    </delete>
+
+    <update id="updateSboard" parameterType="com.xhdc.devicesystem.entity.Switchboard">
+        update switchboard
+        <set>
+            <if test="switchboardStoragetime!=null">switchboard_storagetime=#{switchboardStoragetime},</if>
+            <if test="switchboardStatus!=null">switchboard_status=#{switchboardStatus},</if>
+            <if test="switchboardPrice!=null">switchboard_price=#{switchboardPrice},</if>
+            <if test="switchboardLendername!=null">switchboard_lendername=#{switchboardLendername},</if>
+            <if test="switchboardLendertel">switchboard_lendertel=#{switchboardLendertel},</if>
+            <if test="switchboardBorrowtime!=null||switchboardBorrowtime==null">switchboard_borrowtime=#{switchboardBorrowtime},</if>
+            <if test="switchboardBrand!=null">switchboard_brand=#{switchboardBrand},</if>
+            <if test="switchboardPortnumber!=null">switchboard_portnumber=#{switchboardPortnumber},</if>
+            <if test="switchboardInterfacetype!=null">switchboard_interfacetype=#{switchboardInterfacetype}</if>
+        </set>
+        where
+        switchboard_id=#{switchboardId}
+    </update>
+
+    <select id="querySboard" resultType="com.xhdc.devicesystem.entity.Switchboard">
+        select switchboard_id,switchboard_storagetime,switchboard_status,switchboard_price,switchboard_lendername,switchboard_lendertel,switchboard_borrowtime,switchboard_brand,switchboard_portnumber,switchboard_interfacetype from switchboard
+    </select>
+
+    <select id="getSwitchboardById" resultType="com.xhdc.devicesystem.entity.Switchboard">
+        select switchboard_id,switchboard_storagetime,switchboard_status,switchboard_price,switchboard_lendername,switchboard_lendertel,switchboard_borrowtime,switchboard_brand,switchboard_portnumber,switchboard_interfacetype from switchboard where switchboard_id=#{switchboardId}
+    </select>
+
+    <select id="getSwitchNum" resultType="int">
+        select count(*) from switchboard
+    </select>
+</mapper>

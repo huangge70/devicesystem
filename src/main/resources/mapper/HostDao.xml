@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.HostDao">
+
+    <insert id="insertHost" useGeneratedKeys="true" keyProperty="hostId" keyColumn="host_id" parameterType="com.xhdc.devicesystem.entity.Host">
+        insert into host (host_brand,host_cpu,host_memory,host_status,host_price,host_storagetime,host_lendername,host_lendertel,host_borrowtime)
+        values(#{hostBrand},#{hostCpu},#{hostMemory},#{hostStatus},#{hostPrice},#{hostStoragetime},#{hostLendername},#{hostLendertel},#{hostBorrowtime})
+    </insert>
+
+    <delete id="deleteHost">
+        delete from host where host_id=#{hostId}
+    </delete>
+
+    <update id="updateHost" parameterType="com.xhdc.devicesystem.entity.Host">
+        update host
+        <set>
+            <if test="hostBrand!=null">host_brand=#{hostBrand},</if>
+            <if test="hostCpu!=null">host_cpu=#{hostCpu},</if>
+            <if test="hostMemory!=null">host_memory=#{hostMemory},</if>
+            <if test="hostStatus!=null">host_status=#{hostStatus},</if>
+            <if test="hostPrice">host_price=#{hostPrice},</if>
+            <if test="hostStoragetime!=null">host_storagetime=#{hostStoragetime},</if>
+
+            <if test="hostLendername!=null">host_lendername=#{hostLendername},</if>
+            <if test="hostLendertel!=null">host_lendertel=#{hostLendertel},</if>
+            <if test="hostBorrowtime!=null||hostBorrowtime==null">host_borrowtime=#{hostBorrowtime}</if>
+        </set>
+        where
+        host_id=#{hostId}
+    </update>
+
+    <select id="queryHost" resultType="com.xhdc.devicesystem.entity.Host">
+        select host_id,host_brand,host_cpu,host_memory,host_status,host_price,host_storagetime,host_lendername,host_lendertel,
+        host_borrowtime from host
+    </select>
+
+    <select id="getHostById" resultType="com.xhdc.devicesystem.entity.Host">
+        select host_id,host_brand,host_cpu,host_memory,host_status,host_price,host_storagetime,
+        host_lendername,host_lendertel,host_borrowtime from host where host_id=#{hostId}
+    </select>
+
+    <select id="getHostNum" resultType="int">
+        select count(*) from host
+    </select>
+</mapper>

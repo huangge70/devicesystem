@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.RanDao">
+
+    <insert id="insertRan" useGeneratedKeys="true" keyProperty="ranId" keyColumn="ran_id" parameterType="com.xhdc.devicesystem.entity.Ran">
+        insert into ran (ran_brand,ran_accuracy,ran_distance,ran_method,ran_price,ran_status,ran_storagetime,ran_lendername,ran_lendertel,ran_borrowtime)
+        values(#{ranBrand},#{ranAccuracy},#{ranDistance},#{ranMethod},#{ranPrice},#{ranStatus},#{ranStoragetime},#{ranLendername},#{ranLendertel},#{ranBorrowtime})
+    </insert>
+
+    <delete id="deleteRan">
+        delete from ran where ran_id=#{ranId}
+    </delete>
+
+    <update id="updateRan" parameterType="com.xhdc.devicesystem.entity.Ran">
+        update ran
+        <set>
+            <if test="ranBrand!=null">ran_brand=#{ranBrand},</if>
+            <if test="ranAccuracy!=null">ran_accuracy=#{ranAccuracy},</if>
+            <if test="ranDistance!=null">ran_distance=#{ranDistance},</if>
+            <if test="ranMethod">ran_method=#{ranMethod},</if>
+            <if test="ranPrice!=null">ran_price=#{ranPrice},</if>
+            <if test="ranStatus!=null">ran_status=#{ranStatus},</if>
+            <if test="ranStoragetime!=null">ran_storagetime=#{ranStoragetime},</if>
+            <if test="ranLendername!=null">ran_lendername=#{ranLendername},</if>
+            <if test="ranLendertel!=null">ran_lendertel=#{ranLendertel},</if>
+            <if test="ranBorrowtime!=null || ranBorrowtime==null">ran_borrowtime=#{ranBorrowtime}</if>
+        </set>
+        where
+        ran_id=#{ranId}
+    </update>
+
+
+    <select id="getRanNum" resultType="int">
+        select count(*) from ran
+    </select>
+
+    <select id="queryRan" resultType="com.xhdc.devicesystem.entity.Ran">
+        select ran_id,ran_brand,ran_accuracy,ran_distance,ran_method,ran_price,ran_status,ran_storagetime,ran_lendername,ran_lendertel,ran_borrowtime from ran
+    </select>
+
+
+    <select id="queryRanbyid" resultType="com.xhdc.devicesystem.entity.Ran">
+        select  ran_id,ran_brand,ran_accuracy,ran_distance,ran_method,ran_price,ran_status,ran_storagetime,ran_lendername,ran_lendertel,ran_borrowtime
+        from ran
+        where
+        ran_id=#{ranId}
+    </select>
+
+</mapper>

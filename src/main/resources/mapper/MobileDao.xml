@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhdc.devicesystem.dao.MobileDao">
+
+    <insert id="insertMobile" useGeneratedKeys="true" keyProperty="mobileId" keyColumn="mobile_id" parameterType="com.xhdc.devicesystem.entity.Mobile">
+        insert into mobile (mobile_brand,mobile_memory,mobile_screensize,mobile_price,mobile_storagetime,mobile_status,mobile_lendername,mobile_lenderphone,mobile_borrowtime)
+        values(#{mobileBrand},#{mobileMemory},#{mobileScreensize},#{mobilePrice},#{mobileStoragetime},#{mobileStatus},#{mobileLendername},#{mobileLenderphone},#{mobileBorrowtime})
+    </insert>
+
+    <delete id="deleteMobile">
+        delete from mobile where mobile_id=#{mobileId}
+    </delete>
+
+    <update id="updateMobile" parameterType="com.xhdc.devicesystem.entity.Mobile">
+        update mobile
+        <set>
+            <if test="mobileBrand!=null">mobile_brand=#{mobileBrand},</if>
+            <if test="mobileMemory!=null">mobile_memory=#{mobileMemory},</if>
+            <if test="mobileScreensize!=null">mobile_screensize=#{mobileScreensize},</if>
+            <if test="mobilePrice!=null">mobile_price=#{mobilePrice},</if>
+            <if test="mobileStoragetime!=null">mobile_storagetime=#{mobileStoragetime},</if>
+            <if test="mobileStatus!=null">mobile_status=#{mobileStatus},</if>
+            <if test="mobileLendername!=null">mobile_lendername=#{mobileLendername},</if>
+            <if test="mobileLenderphone!=null">mobile_lenderphone=#{mobileLenderphone},</if>
+            <if test="mobileBorrowtime!=null||mobileBorrowtime==null">mobile_borrowtime=#{mobileBorrowtime}</if>
+        </set>
+        where
+        mobile_id=#{mobileId}
+    </update>
+
+    <select id="queryMobile" resultType="com.xhdc.devicesystem.entity.Mobile">
+        select mobile_id,mobile_brand,mobile_memory,mobile_screensize,mobile_price,mobile_storagetime,mobile_status,
+        mobile_lendername,mobile_lenderphone,mobile_borrowtime from mobile
+    </select>
+
+    <select id="getMobileById" resultType="com.xhdc.devicesystem.entity.Mobile">
+        select mobile_id,mobile_brand,mobile_memory,mobile_screensize,mobile_price,mobile_storagetime,mobile_status,
+        mobile_lendername,mobile_lenderphone,mobile_borrowtime from mobile where mobile_id=#{mobileId}
+    </select>
+
+    <select id="getMobileNum" resultType="int">
+        select count(*) from mobile
+    </select>
+</mapper>
